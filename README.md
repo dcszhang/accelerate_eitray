@@ -4,20 +4,21 @@
 Published in: *arXiv preprint arXiv:2501.13382, 2025. (PDF available)*
 
 ---
+
 ## Overview
 
-This repository contains the code implementation, execution environment setup, and user guide for the paper **"Accelerating Beam-Tracing Method with Dynamic Parallelism on Graphics Processing Units."** This section provides instructions on running the code and a brief introduction to the input files and datasets. For detailed information on the input files, please refer to the [user_guide.pdf](./user_guide.pdf) in this repository.
+This repository only provides the executable file for the project because it is the core, closed-source software developed by our startup. The provided executable implements the methods described in the paper and has been pre-compiled to protect our intellectual property. For detailed explanations of the input files and other project specifics, please refer to the [user_guide.pdf](./user_guide.pdf) included in this repository.
 
-The software implements the Gaussian Beam Tracing (GBT) algorithm to perform acoustic field calculations. The basic idea is to represent a sound wave as a collection of rays and to compute its propagation and reflection in complex environments by applying the propagation laws of these rays. The software accepts inputs including the calculation type, the number and positions of sources, atmospheric conditions, environmental geometry files (in STL format), and various ray-tracing parameters (such as dimensionality, azimuth, total number of rays, and ray compression settings). Finally, it outputs a 3D-renderable VTK file that visually presents the acoustic field distribution and the behavior of sound waves, facilitating improved acoustic design and optimization.
+The software implements the Gaussian Beam Tracing (GBT) algorithm to perform acoustic field calculations. It simulates the propagation and reflection of sound waves in complex environments by representing the sound wave as a collection of rays and applying their propagation laws. The input includes parameters such as calculation type, the number and positions of sources, atmospheric conditions, environmental geometry files (in STL format), and various ray-tracing parameters (e.g., dimensionality, azimuth, total number of rays, and ray compression settings). Finally, the program outputs a 3D-renderable VTK file that visually presents the acoustic field distribution and sound wave propagation behavior, facilitating improved acoustic design and optimization.
 
 ---
 
 ## System Requirements
 
 - **Operating System:** Ubuntu 22.04 LTS (or other Linux distributions)
-- **NVIDIA GPU:** The host must have an NVIDIA GPU with an up-to-date driver that meets the requirements of the CUDA runtime.
-- **Docker:** Docker Engine must be installed and the NVIDIA Container Toolkit (e.g., nvidia-docker2 or Docker’s `--gpus` option) configured so that the container can access the GPU.
-- **Dependencies:** The Docker image includes CUDA, OpenMPI, build tools, and all other required dependencies.
+- **NVIDIA GPU:** The host must have an NVIDIA GPU with an up-to-date driver that meets the CUDA runtime requirements.
+- **Docker:** Docker Engine must be installed, and the NVIDIA Container Toolkit (e.g., nvidia-docker2 or Docker’s `--gpus` option) must be configured so that the container can access the GPU.
+- **Dependencies:** The Docker image includes CUDA, OpenMPI, build tools, and all other necessary dependencies.
 
 ---
 
@@ -53,10 +54,10 @@ docker run -d --name formal_container --gpus all formal_accelerated:latest tail 
 ```
 
 Parameters explained:
-- `-d` runs the container in the background.
-- `--name formal_container` assigns a custom name to the container.
-- `--gpus all` ensures the container can access all GPUs on the host (omit if GPU support is not needed).
-- `tail -f /dev/null` keeps the container running indefinitely.
+- `-d`: Runs the container in the background.
+- `--name formal_container`: Assigns a custom name to the container.
+- `--gpus all`: Ensures the container can access all GPUs on the host (omit if GPU support is not needed).
+- `tail -f /dev/null`: Keeps the container running indefinitely.
 
 ---
 
@@ -80,7 +81,7 @@ Within the container, the following directories contain the datasets used in the
   This directory corresponds to the “Free field” dataset used in the paper. It contains acoustic field data simulated in a free field (an open area without obstacles), which is used to study the behavior of sound waves in an ideal propagation environment.
 
 - **GuangzhouScase:**  
-  This directory corresponds to the “city” dataset. It includes geometric information for urban environments such as buildings, roads, and terrain. This dataset is used to simulate the propagation and reflection of sound waves in a complex urban setting.
+  This directory corresponds to the “city” dataset. It includes geometric information for urban environments such as buildings, roads, and terrain, and is used to simulate the propagation and reflection of sound waves in a complex urban setting.
 
 To view these datasets, run:
 
@@ -88,7 +89,7 @@ To view these datasets, run:
 ls /app
 ```
 
-You should see the following output:
+You should see:
 
 ```
 Freefield_plane  GuangzhouScase  eitray_cuda
@@ -112,7 +113,7 @@ Assuming your project files are located in the `/app/eitray` directory within th
    ./EITRay
    ```
 
-The program will read the control files, source location, observer location, and other input parameters, perform the acoustic field calculations (using GPU-based ray tracing), and output the results including a VTK file for 3D visualization.
+The program will read the control files, source locations, observer positions, and other input parameters, perform the acoustic field calculations (using GPU-based ray tracing), and output the results including a VTK file for 3D visualization.
 
 ---
 
@@ -174,8 +175,8 @@ Program END. Aborting code ...
 
 This log shows that the program has:
 - Read the control, source, and observer files,
-- Executed ray tracing using GPU acceleration (with detailed timing and memory information),
-- Generated output files (e.g., `Zone_0_SPL_1.dat`) and, ultimately, a VTK file for visualization.
+- Performed ray tracing using GPU acceleration (with detailed timing and memory usage information),
+- Output the computation result files (e.g., `Zone_0_SPL_1.dat`), and ultimately produced a VTK file for visualization.
 
 ---
 
@@ -186,7 +187,7 @@ This log shows that the program has:
 - **Solution:** Start the container using `tail -f /dev/null` to keep it running or run it interactively using `docker run -it ...`.
 
 ### GPU Access Issues
-- **Issue:** Errors like “could not select device driver … with capabilities: [[gpu]]” may appear.
+- **Issue:** Errors such as “could not select device driver … with capabilities: [[gpu]]” may appear.
 - **Solution:** Ensure that the host has the correct NVIDIA drivers and that the NVIDIA Container Toolkit is properly configured. Always start the container with the `--gpus all` parameter.
 
 ### Missing Files or Datasets
@@ -197,9 +198,9 @@ This log shows that the program has:
 
 ## Future Extensions
 
-- **Automation Scripts:** Develop shell scripts to automate the process of image building, container startup, and program execution.
+- **Automation Scripts:** Develop shell scripts to automate image building, container startup, and program execution.
 - **Version Management:** Record the versions of CUDA, OpenMPI, and other dependencies to ensure reproducibility.
-- **Enhanced Visualization:** Improve the VTK file output format and visualization details for better analysis.
+- **Enhanced Visualization:** Improve the output VTK file format and visualization details for better analysis.
 - **User Feedback:** Continuously update the software based on user feedback and performance data.
 
 ---
@@ -211,18 +212,21 @@ This log shows that the program has:
 
 2. **Starting the Container:**  
    Start a long-running container with:
+
    ```bash
    docker run -d --name formal_container --gpus all formal_accelerated:latest tail -f /dev/null
    ```
 
 3. **Entering the Container:**  
-   Enter the container using:
+   Enter the container with:
+
    ```bash
    docker exec -it formal_container /bin/bash
    ```
 
 4. **Running the Program:**  
-   Inside the container, switch to the `/app/eitray` directory and run:
+   Inside the container, change to the `/app/eitray` directory and run:
+
    ```bash
    ./EITRay
    ```
@@ -230,6 +234,6 @@ This log shows that the program has:
 5. **Dataset Description:**  
    The directories **Freefield_plane** and **GuangzhouScase** correspond to the “Free field” and “city” datasets used in the paper, providing geometric data for free-field and urban environments to simulate sound wave propagation and reflection.
 
-By following the above steps, you can load the Docker image, start a container, and run the acoustic simulation program as described in the paper. For detailed input file descriptions, please refer to [user_guide.pdf](./user_guide.pdf).
+By following these steps, you can load the Docker image, start a container, and run the acoustic simulation program as described in the paper. For a detailed description of the input files, please refer to [user_guide.pdf](./user_guide.pdf).
 
 ---
