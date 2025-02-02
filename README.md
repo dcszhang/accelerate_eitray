@@ -22,6 +22,12 @@ The software implements the Gaussian Beam Tracing (GBT) algorithm to perform aco
 
 ---
 
+## Large File Download
+
+Due to GitHub’s space limitations, the Docker image is hosted on Google Drive. Please download the Docker image from the following link:
+
+[Download Docker Image from Google Drive](https://drive.google.com/file/d/1k6ysGIj1alFiP-X-iTBTiAr2lJVVtvNr/view?usp=sharing)
+
 ## Loading the Docker Image
 
 If you have an exported image file (e.g., `formal.tar`), load the image into Docker on your host with:
