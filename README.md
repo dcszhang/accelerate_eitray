@@ -1,6 +1,6 @@
 # Accelerating Beam-Tracing Method with Dynamic Parallelism on Graphics Processing Units
 
-**Zhang Sheng, Lishu Duan, ~Hanbo Jiang**  
+**Zhang Sheng, ~Lishu Duan, ~Hanbo Jiang**  
 Published in: *arXiv preprint arXiv:2501.13382, 2025. (PDF available)*
 
 ---
